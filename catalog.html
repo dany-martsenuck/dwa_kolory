@@ -90,13 +90,9 @@
                 const lines = data.trim().split('\n');
                 const productTypes = new Set();
 
-                const container = document.getElementById('product-container');
-
                 lines.forEach(line => {
                     const [imageUrl, productName, price, productType] = line.split(',');
                     productTypes.add(productType);
-
-                    createProductCard(imageUrl, productName, price, productType);
                 });
 
                 // Add product types to the filter dropdown
@@ -110,21 +106,33 @@
 
                 filter.addEventListener('change', () => {
                     const selectedType = filter.value;
-                    container.innerHTML = '';
-
-                    lines.forEach(line => {
-                        const [imageUrl, productName, price, productType] = line.split(',');
-                        if (selectedType === 'all' || selectedType === productType) {
-                            createProductCard(imageUrl, productName, price, productType);
-                        }
-                    });
+                    renderProducts(selectedType);
                 });
+
+                renderProducts('all');
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
         }
 
-        function createProductCard(imageUrl, productName
+        function renderProducts(selectedType) {
+            const container = document.getElementById('product-container');
+            container.innerHTML = '';
+
+            fetch('products.csv')
+                .then(response => response.text())
+                .then(data => {
+                    const lines = data.trim().split('\n');
+
+                    lines.forEach(line => {
+                        const [imageUrl, productName, price, productType] = line
+                        if (selectedType === 'all' || selectedType === productType) {
+                            createProductCard(imageUrl, productName, price, productType);
+                        }
+                    });
+                });
+        }
+
         function createProductCard(imageUrl, productName, price, productType) {
             const container = document.getElementById('product-container');
             const productCard = document.createElement('div');
