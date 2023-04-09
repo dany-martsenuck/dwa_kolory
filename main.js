@@ -1,0 +1,82 @@
+// Fetch product data from a CSV file and populate the filter dropdown
+async function loadProducts() {
+    try {
+        const response = await fetch('products.csv');
+        const data = await response.text();
+        const lines = data.trim().split(/\r?\n/);
+        const productTypes = new Set();
+
+        // Extract product types from CSV data
+        lines.forEach(line => {
+            const [imageUrl, productName, price, productType] = line.split(',');
+            productTypes.add(productType);
+        });
+
+        // Add product types to the filter dropdown
+        const filter = document.getElementById('product-type-filter');
+        productTypes.forEach(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            option.innerText = type;
+            filter.appendChild(option);
+        });
+
+        // Attach event listener for filtering products
+        filter.addEventListener('change', () => {
+            const selectedType = filter.value;
+            renderProducts(selectedType);
+        });
+
+        // Render products initially
+        renderProducts('all');
+    } catch (error) {
+        console.error('Error fetching products:', error);
+    }
+}
+
+// Render products in the container based on the selected type
+function renderProducts(selectedType) {
+    const container = document.getElementById('product-container');
+    container.innerHTML = '';
+
+    fetch('products.csv')
+        .then(response => response.text())
+        .then(data => {
+            const lines = data.trim().split(/\r?\n/);
+
+            // Create product cards for each product matching the selected type
+            lines.forEach(line => {
+                const [imageUrl, productName, price, productType] = line.split(',');
+                if (selectedType === 'all' || selectedType === productType) {
+                    createProductCard(imageUrl, productName, price, productType);
+                }
+            });
+        });
+}
+
+// Create a product card element and append it to the container
+function createProductCard(imageUrl, productName, price, productType) {
+    const container = document.getElementById('product-container');
+    const productCard = document.createElement('div');
+    productCard.classList.add('product-card');
+
+    const productImage = document.createElement('img');
+    productImage.src = imageUrl;
+    productImage.alt = productName;
+    productImage.classList.add('product-image');
+
+    const productNameElem = document.createElement('h2');
+    productNameElem.innerText = productName;
+
+    const productPrice = document.createElement('p');
+    productPrice.innerText = `$${price}`;
+
+    productCard.appendChild(productImage);
+    productCard.appendChild(productNameElem);
+    productCard.appendChild(productPrice);
+
+    container.appendChild(productCard);
+}
+
+// Load products when the page loads
+loadProducts
