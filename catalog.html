@@ -125,7 +125,7 @@
                     const lines = data.trim().split(/\r?\n/);
 
                     lines.forEach(line => {
-                        const [imageUrl, productName, price, productType] = line
+                        const [imageUrl, productName, price, productType] = line.split(',');
                         if (selectedType === 'all' || selectedType === productType) {
                             createProductCard(imageUrl, productName, price, productType);
                         }
