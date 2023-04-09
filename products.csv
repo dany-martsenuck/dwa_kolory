@@ -1,6 +1,11 @@
-https://example.com/img/product1.jpg,Product 1,49.99
-https://example.com/img/product2.jpg,Product 2,59.99
-https://example.com/img/product3.jpg,Product 3,69.99
-https://example.com/img/product1.jpg,Данило 1,148.80
-https://example.com/img/product2.jpg,Danylo 2,2.28
-https://example.com/img/product3.jpg,Product 3,69.99
+https://picsum.photos/200,Product 1,19.99,Electronics
+https://picsum.photos/200/300.jpg,Product 2,29.99,Electronics
+https://picsum.photos/200/300.webp,Product 3,39.99,Electronics
+https://picsum.photos/200/300,Product 4,49.99,Fashion
+https://picsum.photos/200/300,Product 5,59.99,Fashion
+https://picsum.photos/200/300,Product 6,69.99,Fashion
+https://picsum.photos/200/300,Product 7,79.99,Home
+https://picsum.photos/200/300,Product 8,89.99,Home
+https://picsum.photos/200/300,Product 9,99.99,Home
+https://picsum.photos/200/300,Product 10,109.99,Sports
+
