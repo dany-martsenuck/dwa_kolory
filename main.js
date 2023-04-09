@@ -1,4 +1,3 @@
-// Fetch product data from a CSV file and populate the filter dropdown
 async function loadProducts() {
     try {
         const response = await fetch('products.csv');
@@ -6,7 +5,6 @@ async function loadProducts() {
         const lines = data.trim().split(/\r?\n/);
         const productTypes = new Set();
 
-        // Extract product types from CSV data
         lines.forEach(line => {
             const [imageUrl, productName, price, productType] = line.split(',');
             productTypes.add(productType);
@@ -21,20 +19,17 @@ async function loadProducts() {
             filter.appendChild(option);
         });
 
-        // Attach event listener for filtering products
         filter.addEventListener('change', () => {
             const selectedType = filter.value;
             renderProducts(selectedType);
         });
 
-        // Render products initially
         renderProducts('all');
     } catch (error) {
         console.error('Error fetching products:', error);
     }
 }
 
-// Render products in the container based on the selected type
 function renderProducts(selectedType) {
     const container = document.getElementById('product-container');
     container.innerHTML = '';
@@ -44,7 +39,6 @@ function renderProducts(selectedType) {
         .then(data => {
             const lines = data.trim().split(/\r?\n/);
 
-            // Create product cards for each product matching the selected type
             lines.forEach(line => {
                 const [imageUrl, productName, price, productType] = line.split(',');
                 if (selectedType === 'all' || selectedType === productType) {
@@ -54,7 +48,6 @@ function renderProducts(selectedType) {
         });
 }
 
-// Create a product card element and append it to the container
 function createProductCard(imageUrl, productName, price, productType) {
     const container = document.getElementById('product-container');
     const productCard = document.createElement('div');
@@ -78,5 +71,4 @@ function createProductCard(imageUrl, productName, price, productType) {
     container.appendChild(productCard);
 }
 
-// Load products when the page loads
-loadProducts
+loadProducts();
