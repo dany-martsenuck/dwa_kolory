@@ -1,3 +1,10 @@
+document.querySelector('html').style.scrollBehavior = 'smooth';
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('header');
+  header.style.backgroundPositionY = `-${window.scrollY / 2}px`;
+});
+
+
 async function loadProducts() {
     try {
         const response = await fetch('products.csv');
