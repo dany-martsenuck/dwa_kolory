@@ -4,38 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Catalog</title>
-    <!-- Move styles to an external stylesheet for better organization -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
-
+    <script defer src="main.js"></script>
 </head>
 <body>
-    <h1>Product Catalog</h1>
-    <div class="filter-container">
-        <select id="product-type-filter" class="filter">
-            <option value="all">All</option>
-        </select>
+    <div class="main-content">
+        <h1>Product Catalog</h1>
+        <div class="filter-container">
+            <select id="product-type-filter" class="filter">
+                <option value="all">All</option>
+            </select>
+        </div>
+        <div class="container" id="product-container"></div>
     </div>
-    <div class="container" id="product-container"></div>
-
-    <!-- Move the script to an external JavaScript file for better organization -->
     <footer>
-    <div class="footer-content">
-        <div class="contact-info">
-            <h3>Contact Us</h3>
-            <p>Email: dwa_kolory@gmail.com</p>
-            <p>Phone: +48 000 000 000</p>
-            <p>Address: Świdnicka 19, 31-612 Kraków, Poland</p>
+        <div class="footer-content">
+            <p>Store Address: 123 Main Street, City, Country</p>
+            <p>Email: example@example.com</p>
+            <p>Phone: +1 (123) 456-7890</p>
+            <div class="social-links">
+                <a href="https://www.instagram.com/yourusername/" target="_blank">Instagram</a>
+                <a href="https://t.me/yourusername" target="_blank">Telegram</a>
+            </div>
         </div>
-        <div class="social-links">
-            <h3>Follow Us</h3>
-            <p><a href="https://www.instagram.com/dwakolory.ua/" target="_blank">Instagram</a></p>
-            <p><a href="https://t.me/yana_khm" target="_blank">Telegram</a></p>
-        </div>
-    </div>
-</footer>
-
-    <script src="main.js"></script>
+    </footer>
 </body>
 </html>
