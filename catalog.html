@@ -5,73 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Catalog</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        h1 {
-            text-align: center;
-            padding: 20px 0;
-        }
-
-        .filter-container {
-            display: flex;
-            justify-content: flex-end;
-            margin-right: 20px;
-        }
-
-        .filter {
-            background-color: #ccc;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .product-card {
-            box-sizing: border-box;
-            width: 100%;
-            margin: 10px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
-            background-color: #f9f9f9;
-        }
-
-        @media (min-width: 480px) {
-            .product-card {
-                width: calc(50% - 20px);
-            }
-        }
-
-        @media (min-width: 768px) {
-            .product-card {
-                width: calc(33.33% - 20px);
-            }
-        }
-
-        @media (min-width: 992px) {
-            .product-card {
-                width: calc(20% - 20px);
-            }
-        }
-
-        .product-image {
-            width: 100%;
-            height: auto;
-            margin-bottom: 10px;
-        }
+        /* Add your styles here */
     </style>
+    <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
 </head>
 <body>
     <h1>Product Catalog</h1>
@@ -83,19 +19,38 @@
     <div class="container" id="product-container"></div>
 
     <script>
+        const API_KEY = 'AIzaSyDKDqFSNbxojrTci3nP1PAbeL86pyf5gQw';
+        const SPREADSHEET_ID = '1uIVSexOMV5Pd8F_Mhd1VrkQYKBJOtdniFBmT55xcEqk';
+        const RANGE = 'Products!A1:D';
+
+        function handleClientLoad() {
+            gapi.load('client', initClient);
+        }
+
+        function initClient() {
+            gapi.client.init({
+                apiKey: API_KEY,
+                discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
+            }).then(() => {
+                loadProducts();
+            });
+        }
+
         async function loadProducts() {
             try {
-                const response = await fetch('products.csv');
-                const data = await response.text();
-                const lines = data.trim().split(/\r?\n/);
+                const response = await gapi.client.sheets.spreadsheets.values.get({
+                    spreadsheetId: SPREADSHEET_ID,
+                    range: RANGE,
+                });
+
+                const rows = response.result.values;
                 const productTypes = new Set();
 
-                lines.forEach(line => {
-                    const [imageUrl, productName, price, productType] = line.split(',');
+                rows.forEach(row => {
+                    const [imageUrl, productName, price, productType] = row;
                     productTypes.add(productType);
                 });
 
-                // Add product types to the filter dropdown
                 const filter = document.getElementById('product-type-filter');
                 productTypes.forEach(type => {
                     const option = document.createElement('option');
@@ -119,44 +74,25 @@
             const container = document.getElementById('product-container');
             container.innerHTML = '';
 
-            fetch('products.csv')
-                .then(response => response.text())
-                .then(data => {
-                    const lines = data.trim().split(/\r?\n/);
+            gapi.client.sheets.spreadsheets.values.get({
+                spreadsheetId: SPREADSHEET_ID,
+                range: RANGE,
+            }).then(response => {
+                const rows = response.result.values;
 
-                    lines.forEach(line => {
-                        const [imageUrl, productName, price, productType] = line.split(',');
-                        if (selectedType === 'all' || selectedType === productType) {
-                            createProductCard(imageUrl, productName, price, productType);
-                        }
-                    });
+                rows.forEach(row => {
+                    const [imageUrl, productName, price, productType] = row;
+                    if (selectedType === 'all' || selectedType === productType) {
+                        createProductCard(imageUrl, productName, price, productType);
+                    }
                 });
+            });
         }
 
         function createProductCard(imageUrl, productName, price, productType) {
-            const container = document.getElementById('product-container');
-            const productCard = document.createElement('div');
-            productCard.classList.add('product-card');
-
-            const productImage = document.createElement('img');
-            productImage.src = imageUrl;
-            productImage.alt = productName;
-            productImage.classList.add('product-image');
-
-            const productNameElem = document.createElement('h2');
-            productNameElem.innerText = productName;
-
-            const productPrice = document.createElement('p');
-            productPrice.innerText = `$${price}`;
-
-            productCard.appendChild(productImage);
-            productCard.appendChild(productNameElem);
-            productCard.appendChild(productPrice);
-
-            container.appendChild(productCard);
+            /* Add your createProductCard implementation here */
         }
 
-        loadProducts();
     </script>
 </body>
 </html>
