@@ -3,9 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog</title>
+    <title>Product Catalog</title>    
     <style>
-        /* Add your styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 20px;
+        }
+
+        .filter {
+            background-color: #ccc;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product-card {
+            box-sizing: border-box;
+            width: 100%;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
+        @media (min-width: 480px) {
+            .product-card {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .product-card {
+                width: calc(33.33% - 20px);
+            }
+        }
+
+        @media (min-width: 992px) {
+            .product-card {
+                width: calc(20% - 20px);
+            }
+        }
+
+        .product-image {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
     </style>
     <script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
 </head>
@@ -90,9 +155,29 @@
         }
 
         function createProductCard(imageUrl, productName, price, productType) {
-            /* Add your createProductCard implementation here */
+            const container = document.getElementById('product-container');
+            const productCard = document.createElement('div');
+            productCard.classList.add('product-card');
+
+            const productImage = document.createElement('img');
+            productImage.src = imageUrl;
+            productImage.alt = productName;
+            productImage.classList.add('product-image');
+
+            const productNameElem = document.createElement('h2');
+            productNameElem.innerText = productName;
+
+            const productPrice = document.createElement('p');
+            productPrice.innerText = `$${price}`;
+
+            productCard.appendChild(productImage);
+            productCard.appendChild(productNameElem);
+            productCard.appendChild(productPrice);
+
+            container.appendChild(productCard);
         }
 
+        loadProducts();
     </script>
 </body>
 </html>
