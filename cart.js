@@ -34,51 +34,58 @@ function displayCartItems() {
         const quantityWrapper = document.createElement('div');
         quantityWrapper.classList.add('quantity-wrapper');
 
-        const decreaseButton = document.createElement('button');
-        decreaseButton.innerText = '-';
-        decreaseButton.classList.add('quantity-btn', 'quantity-decrease');
-        decreaseButton.onclick = () => decreaseQuantity(index);
+        const decreaseBtn = document.createElement('button');
+        decreaseBtn.classList.add('quantity-btn', 'quantity-decrease');
+        decreaseBtn.innerText = '-';
+        decreaseBtn.onclick = () => decreaseQuantity(index);
 
         const quantityInput = document.createElement('input');
         quantityInput.type = 'number';
+        quantityInput.classList.add('quantity-input');
         quantityInput.value = item.quantity;
         quantityInput.min = 1;
-        quantityInput.classList.add('quantity-input');
-        quantityInput.onchange = (e) => updateQuantity(index, e.target);
+        quantityInput.onchange = (event) => updateQuantity(index, event.target);
 
-        const increaseButton = document.createElement('button');
-        increaseButton.innerText = '+';
-        increaseButton.classList.add('quantity-btn', 'quantity-increase');
-        increaseButton.onclick = () => increaseQuantity(index);
+        const increaseBtn = document.createElement('button');
+        increaseBtn.classList.add('quantity-btn', 'quantity-increase');
+        increaseBtn.innerText = '+';
+        increaseBtn.onclick = () => increaseQuantity(index);
 
-        quantityWrapper.appendChild(decreaseButton);
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('delete-item-btn');
+        deleteBtn.innerText = 'Delete';
+        deleteBtn.onclick = () => deleteItem(index);
+
+        quantityWrapper.appendChild(decreaseBtn);
         quantityWrapper.appendChild(quantityInput);
-        quantityWrapper.appendChild(increaseButton);
-
-        const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'Delete';
-        deleteButton.classList.add('delete-item-btn');
-        deleteButton.onclick = () => deleteItem(index);
+        quantityWrapper.appendChild(increaseBtn);
 
         cartItem.appendChild(productImage);
         cartItem.appendChild(productNameElem);
         cartItem.appendChild(productPrice);
         cartItem.appendChild(quantityWrapper);
-        cartItem.appendChild(deleteButton);
+        cartItem.appendChild(deleteBtn);
 
         cartContainer.appendChild(cartItem);
     });
 
     document.getElementById('cart-total-value').innerText = total.toFixed(2);
+
+    const checkoutBtn = document.getElementById('checkout-btn');
+    checkoutBtn.addEventListener('click', () => {
+        alert('Thank you for your purchase!');
+        localStorage.removeItem('cart');
+        location.reload();
+    });
 }
 
 function decreaseQuantity(index) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (cart[index].quantity > 1) {
         cart[index].quantity--;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        displayCartItems();
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    displayCartItems();
 }
 
 function increaseQuantity(index) {
@@ -90,9 +97,14 @@ function increaseQuantity(index) {
 
 function updateQuantity(index, input) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart[index].quantity = parseInt(input.value, 10);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    displayCartItems();
+    const newValue = parseInt(input.value, 10);
+    if (newValue >= 1) {
+        cart[index].quantity = newValue;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        displayCartItems();
+    } else {
+        input.value = cart[index].quantity;
+    }
 }
 
 function deleteItem(index) {
@@ -101,10 +113,3 @@ function deleteItem(index) {
     localStorage.setItem('cart', JSON.stringify(cart));
     displayCartItems();
 }
-
-const checkoutBtn = document.getElementById('checkout-btn');
-checkoutBtn.addEventListener('click', () => {
-    alert('Thank you for your purchase!');
-    localStorage.removeItem('cart');
-    location.reload();
-});
