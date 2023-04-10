@@ -232,3 +232,20 @@ footer {
 .social-links a:hover {
   color: #ff9800;
 }
+
+.action-button {
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 15px;
+    margin: 10px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.action-button:hover {
+    background-color: #555;
+}
+
