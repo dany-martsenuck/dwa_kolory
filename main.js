@@ -44,9 +44,10 @@ function renderProducts(selectedType) {
         .then(response => response.text())
         .then(data => {
             const lines = data.trim().split(/\r?\n/);
+            const products = lines.slice(1); // Remove the first line (column headers)
 
-            lines.forEach(line => {
-                const [imageUrl, productName, price, productType] = line.split(',');
+            products.forEach(product => {
+                const [imageUrl, productName, price, productType] = product.split(',');
                 if (selectedType === 'all' || selectedType === productType) {
                     createProductCard(imageUrl, productName, price, productType);
                 }
