@@ -4,10 +4,9 @@ window.addEventListener('scroll', () => {
   header.style.backgroundPositionY = `-${window.scrollY / 2}px`;
 });
 
-
 async function loadProducts() {
     try {
-        const response = await fetch('https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv');
+        const response = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4uRg4A0Qssyeek5pTJgWgSGN8Fe4jWTm94oLFlKzfhfF53OcHCvJ-WEDLWYTMp28swx7tS2Tc6juD/pub?output=csv');
         const data = await response.text();
         const lines = data.trim().split(/\r?\n/);
         const productTypes = new Set();
@@ -37,12 +36,11 @@ async function loadProducts() {
     }
 }
 
-
 function renderProducts(selectedType) {
     const container = document.getElementById('product-container');
     container.innerHTML = '';
 
-    fetch('https://docs.google.com/spreadsheets/d/{ID}/gviz/tq?tqx=out:csv')
+    fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4uRg4A0Qssyeek5pTJgWgSGN8Fe4jWTm94oLFlKzfhfF53OcHCvJ-WEDLWYTMp28swx7tS2Tc6juD/pub?output=csv')
         .then(response => response.text())
         .then(data => {
             const lines = data.trim().split(/\r?\n/);
@@ -55,7 +53,6 @@ function renderProducts(selectedType) {
             });
         });
 }
-
 
 function createProductCard(imageUrl, productName, price, productType) {
     const container = document.getElementById('product-container');
