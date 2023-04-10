@@ -148,10 +148,14 @@ h1 {
 
 /* Cart Total */
 .cart-total {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .cart-total h2 {
@@ -265,3 +269,46 @@ footer {
         visibility: visible;
     }
 }
+
+
+/* Cart quantity controls */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-button {
+  background-color: #333;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.quantity-button:hover {
+  background-color: #555;
+}
+
+.remove-item-btn {
+  background-color: #ff5555;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+  margin: 5px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.remove-item-btn:hover {
+  background-color: #ff7878;
+}
+
+/* Update cart total style */
+
+
