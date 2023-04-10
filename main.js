@@ -75,14 +75,6 @@ function createProductCard(imageUrl, productName, price, productType) {
     productCard.appendChild(productNameElem);
     productCard.appendChild(productPrice);
 
-    container.appendChild(productCard);
-
-    // Add checkmark icon
-    const checkmark = document.createElement('i');
-    checkmark.className = 'checkmark';
-    checkmark.innerText = '✔';
-    productCard.appendChild(checkmark);
-
     const addToCartButton = document.createElement('button');
     addToCartButton.innerText = 'Add to Cart';
     addToCartButton.classList.add('add-to-cart-button');
@@ -94,37 +86,28 @@ function createProductCard(imageUrl, productName, price, productType) {
             productType
         };
         addToCart(cartItem);
-        showCheckmarkAnimation(checkmark);
+        showAddedText(addToCartButton);
     });
 
     productCard.appendChild(addToCartButton);
     container.appendChild(productCard);
 }
 
-function addToCart(item) {
-    let cart = localStorage.getItem('cart');
-    cart = cart ? JSON.parse(cart) : [];
-
-    const existingItem = cart.find((cartItem) => cartItem.productName === item.productName);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        item.quantity = 1;
-        cart.push(item);
-    }
-
+function addToCart(cartItem) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(cartItem);
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-function showCheckmarkAnimation(checkmark) {
-    checkmark.style.opacity = '1';
-    checkmark.style.transform = 'scale(1)';
+function showAddedText(button) {
+    const originalText = button.innerText;
+    button.innerText = 'Added';
+    button.disabled = true;
 
     setTimeout(() => {
-        checkmark.style.opacity = '0';
-        checkmark.style.transform = 'scale(0)';
+        button.innerText = originalText;
+        button.disabled = false;
     }, 2000);
 }
 
 loadProducts();
-
