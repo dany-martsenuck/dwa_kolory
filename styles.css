@@ -265,36 +265,3 @@ footer {
         visibility: visible;
     }
 }
-
-.checkmark {
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 50px;
-    color: #4CAF50;
-    opacity: 0;
-    z-index: 3; /* Increase z-index */
-}
-
-.checkmark.show {
-    display: inline-block;
-    animation: checkmark 1s;
-}
-
-@keyframes checkmark {
-    0% {
-        opacity: 0;
-    }
-    20% {
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
