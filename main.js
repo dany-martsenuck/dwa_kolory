@@ -1,7 +1,7 @@
 document.querySelector('html').style.scrollBehavior = 'smooth';
 window.addEventListener('scroll', () => {
-  const header = document.querySelector('header');
-  header.style.backgroundPositionY = `-${window.scrollY / 2}px`;
+    const header = document.querySelector('header');
+    header.style.backgroundPositionY = `-${window.scrollY / 2}px`;
 });
 
 async function loadProducts() {
@@ -77,6 +77,12 @@ function createProductCard(imageUrl, productName, price, productType) {
 
     container.appendChild(productCard);
 
+    // Add checkmark icon
+    const checkmark = document.createElement('i');
+    checkmark.className = 'checkmark';
+    checkmark.innerText = '✔';
+    productCard.appendChild(checkmark);
+
     const addToCartButton = document.createElement('button');
     addToCartButton.innerText = 'Add to Cart';
     addToCartButton.classList.add('add-to-cart-button');
@@ -88,6 +94,7 @@ function createProductCard(imageUrl, productName, price, productType) {
             productType
         };
         addToCart(cartItem);
+        showCheckmarkAnimation(checkmark);
     });
 
     productCard.appendChild(addToCartButton);
@@ -109,5 +116,15 @@ function addToCart(item) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
+function showCheckmarkAnimation(checkmark) {
+    checkmark.style.opacity = '1';
+    checkmark.style.transform = 'scale(1)';
+
+    setTimeout(() => {
+        checkmark.style.opacity = '0';
+        checkmark.style.transform = 'scale(0)';
+    }, 2000);
+}
 
 loadProducts();
+
