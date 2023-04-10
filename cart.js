@@ -12,8 +12,11 @@ function displayCartItems() {
     }
 
     cartContainer.innerHTML = '';
+    let total = 0;
 
     cart.forEach((item, index) => {
+        total += parseFloat(item.price) * item.quantity;
+
         const cartItem = document.createElement('div');
         cartItem.classList.add('cart-item');
 
@@ -31,50 +34,39 @@ function displayCartItems() {
         const quantityWrapper = document.createElement('div');
         quantityWrapper.classList.add('quantity-wrapper');
 
-        const decreaseBtn = document.createElement('button');
-        decreaseBtn.innerText = '-';
-        decreaseBtn.classList.add('quantity-btn', 'quantity-decrease');
-        decreaseBtn.onclick = () => decreaseQuantity(index);
+        const decreaseButton = document.createElement('button');
+        decreaseButton.innerText = '-';
+        decreaseButton.classList.add('quantity-btn', 'quantity-decrease');
+        decreaseButton.onclick = () => decreaseQuantity(index);
 
         const quantityInput = document.createElement('input');
         quantityInput.type = 'number';
         quantityInput.value = item.quantity;
         quantityInput.min = 1;
         quantityInput.classList.add('quantity-input');
-        quantityInput.onchange = () => updateQuantity(index, quantityInput);
+        quantityInput.onchange = (e) => updateQuantity(index, e.target);
 
-        const increaseBtn = document.createElement('button');
-        increaseBtn.innerText = '+';
-        increaseBtn.classList.add('quantity-btn', 'quantity-increase');
-        increaseBtn.onclick = () => increaseQuantity(index);
+        const increaseButton = document.createElement('button');
+        increaseButton.innerText = '+';
+        increaseButton.classList.add('quantity-btn', 'quantity-increase');
+        increaseButton.onclick = () => increaseQuantity(index);
 
-        quantityWrapper.appendChild(decreaseBtn);
+        quantityWrapper.appendChild(decreaseButton);
         quantityWrapper.appendChild(quantityInput);
-        quantityWrapper.appendChild(increaseBtn);
+        quantityWrapper.appendChild(increaseButton);
 
-        const deleteBtn = document.createElement('button');
-        deleteBtn.innerText = 'Delete';
-        deleteBtn.classList.add('delete-item-btn');
-        deleteBtn.onclick = () => deleteItem(index);
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.classList.add('delete-item-btn');
+        deleteButton.onclick = () => deleteItem(index);
 
         cartItem.appendChild(productImage);
         cartItem.appendChild(productNameElem);
         cartItem.appendChild(productPrice);
         cartItem.appendChild(quantityWrapper);
-        cartItem.appendChild(deleteBtn);
+        cartItem.appendChild(deleteButton);
 
         cartContainer.appendChild(cartItem);
-    });
-
-    updateCartTotal();
-}
-
-function updateCartTotal() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let total = 0;
-
-    cart.forEach(item => {
-        total += parseFloat(item.price) * item.quantity;
     });
 
     document.getElementById('cart-total-value').innerText = total.toFixed(2);
@@ -82,39 +74,29 @@ function updateCartTotal() {
 
 function decreaseQuantity(index) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
     if (cart[index].quantity > 1) {
         cart[index].quantity--;
-        localStorage.setItem('cart', JSON.stringify(cart));
-        displayCartItems();
     }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    displayCartItems();
 }
 
 function increaseQuantity(index) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
     cart[index].quantity++;
     localStorage.setItem('cart', JSON.stringify(cart));
     displayCartItems();
 }
 
 function updateQuantity(index, input) {
-    const newQuantity = parseInt(input.value);
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    if (newQuantity > 0) {
-        cart[index].quantity = newQuantity;
-    } else {
-        input.value = cart[index].quantity;
-    }
-
+    cart[index].quantity = parseInt(input.value, 10);
     localStorage.setItem('cart', JSON.stringify(cart));
     displayCartItems();
 }
 
 function deleteItem(index) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
     cart.splice(index, 1);
     localStorage.setItem('cart', JSON.stringify(cart));
     displayCartItems();
