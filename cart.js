@@ -32,10 +32,10 @@ function displayCartItems() {
         productPrice.innerText = `$${item.price}`;
 
         const quantityWrapper = document.createElement('div');
-        quantityWrapper.classList.add('quantity-wrapper');
+        quantityWrapper.classList.add('quantity-controls');
 
         const decreaseBtn = document.createElement('button');
-        decreaseBtn.classList.add('quantity-btn', 'quantity-decrease');
+        decreaseBtn.classList.add('quantity-button');
         decreaseBtn.innerText = '-';
         decreaseBtn.onclick = () => decreaseQuantity(index);
 
@@ -47,13 +47,13 @@ function displayCartItems() {
         quantityInput.onchange = (event) => updateQuantity(index, event.target);
 
         const increaseBtn = document.createElement('button');
-        increaseBtn.classList.add('quantity-btn', 'quantity-increase');
+        increaseBtn.classList.add('quantity-button');
         increaseBtn.innerText = '+';
         increaseBtn.onclick = () => increaseQuantity(index);
 
         const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add('delete-item-btn');
-        deleteBtn.innerText = 'Delete';
+        deleteBtn.classList.add('remove-item-btn');
+        deleteBtn.innerText = 'Remove';
         deleteBtn.onclick = () => deleteItem(index);
 
         quantityWrapper.appendChild(decreaseBtn);
