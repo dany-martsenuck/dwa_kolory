@@ -42,7 +42,7 @@ function displayCartItems() {
         const quantityInput = document.createElement('input');
         quantityInput.type = 'number';
         quantityInput.classList.add('quantity-input');
-        quantityInput.value = item.quantity;
+        quantityInput.value = item.quantity || 1;
         quantityInput.min = 1;
         quantityInput.onchange = (event) => updateQuantity(index, event.target);
 
