@@ -95,6 +95,7 @@ function createProductCard(imageUrl, productName, price, productType) {
 
 function addToCart(cartItem) {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartItem.quantity = 1; // Set the initial quantity to 1
     cart.push(cartItem);
     localStorage.setItem('cart', JSON.stringify(cart));
 }
