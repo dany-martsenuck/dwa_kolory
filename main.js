@@ -1,11 +1,6 @@
-document.querySelector('html').style.scrollBehavior = 'smooth';
-window.addEventListener('scroll', () => {
-  const header = document.querySelector('header');
-  header.style.backgroundPositionY = `-${window.scrollY / 2}px`;
-});
+// This script loads the products from the CSV file and renders them on the page.
 
-
-async function loadProducts() {
+const loadProducts = async () => {
     try {
         const response = await fetch('products.csv');
         const data = await response.text();
@@ -35,9 +30,11 @@ async function loadProducts() {
     } catch (error) {
         console.error('Error fetching products:', error);
     }
-}
+};
 
-function renderProducts(selectedType) {
+// This function renders the product cards on the page.
+
+const renderProducts = (selectedType) => {
     const container = document.getElementById('product-container');
     container.innerHTML = '';
 
@@ -53,9 +50,11 @@ function renderProducts(selectedType) {
                 }
             });
         });
-}
+};
 
-function createProductCard(imageUrl, productName, price, productType) {
+// This function creates a product card.
+
+const createProductCard = (imageUrl, productName, price, productType) => {
     const container = document.getElementById('product-container');
     const productCard = document.createElement('div');
     productCard.classList.add('product-card');
@@ -72,10 +71,4 @@ function createProductCard(imageUrl, productName, price, productType) {
     productPrice.innerText = `$${price}`;
 
     productCard.appendChild(productImage);
-    productCard.appendChild(productNameElem);
-    productCard.appendChild(productPrice);
-
-    container.appendChild(productCard);
-}
-
-loadProducts();
+ 
