@@ -104,6 +104,19 @@ cartItem\.innerText \= \`</span>{product.name} (${product.quantity})`;
 
 // This function handles the click event on the product card.
 
-const handleProductCardClick = (event) => {
+handleProductCardClick = (event) => {
     const productCard = event.target;
-    addProductTo
+    addProductToCart(productCard);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+    initCart();
+
+    // Add event listeners to the product cards.
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(productCard => {
+        productCard.addEventListener('click', handleProductCardClick);
+    });
+});
+
