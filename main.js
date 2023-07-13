@@ -46,7 +46,14 @@ const renderProducts = (selectedType) => {
             lines.forEach(line => {
                 const [imageUrl, productName, price, productType] = line.split(',');
                 if (selectedType === 'all' || selectedType === productType) {
-                    createProductCard(imageUrl, productName, price, productType);
+                    const productCard = createProductCard(imageUrl, productName, price, productType);
+
+                    const quantityInput = document.createElement('input');
+                    quantityInput.type = 'number';
+                    quantityInput.min = 1;
+                    quantityInput.value = 1;
+
+                    productCard.appendChild(quantityInput);
                 }
             });
         });
@@ -63,3 +70,66 @@ const createProductCard = (imageUrl, productName, price, productType) => {
     productImage.src = imageUrl;
     productImage.alt = productName;
     productImage.classList.add('product-image');
+
+    const productNameElem = document.createElement('h2');
+    productNameElem.innerText = productName;
+
+    const priceElem = document.createElement('p');
+    priceElem.innerText = `$${price}`;
+
+    const quantityInput = document.createElement('input');
+    quantityInput.type = 'number';
+    quantityInput.min = 1;
+    quantityInput.value = 1;
+
+    productCard.appendChild(productImage);
+    productCard.appendChild(productNameElem);
+    productCard.appendChild(priceElem);
+    productCard.appendChild(quantityInput);
+
+    return productCard;
+};
+
+// This function adds the product to the cart.
+
+const addProductToCart = (productCard) => {
+    const quantityInput = productCard.querySelector('input');
+    const quantity = quantityInput.value;
+
+    const product = {
+        name: productCard.querySelector('h2').innerText,
+        price: productCard.querySelector('p').innerText,
+        quantity: quantity,
+    };
+
+    const cartItems = document.getElementById('cart-items');
+    const cartItem = document.createElement('li');
+    cartItem.innerText = `${product.name} (${product.quantity})`;
+
+    cartItems.appendChild(cartItem);
+};
+
+// This function handles the click event on the product card.
+
+const handleProductCardClick = (event) => {
+    const productCard = event.target;
+    addProductToCart(productCard);
+};
+
+// This function initializes the cart.
+
+const initCart = () => {
+    const cartItems = document.getElementById('cart-items');
+    cartItems.innerHTML = '';
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadProducts();
+    initCart();
+
+    // Add event listeners to the product cards.
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(productCard => {
+        productCard.addEventListener('click', handleProductCardClick);
+    });
+});
