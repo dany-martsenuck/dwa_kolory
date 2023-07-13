@@ -63,12 +63,3 @@ const createProductCard = (imageUrl, productName, price, productType) => {
     productImage.src = imageUrl;
     productImage.alt = productName;
     productImage.classList.add('product-image');
-
-    const productNameElem = document.createElement('h2');
-    productNameElem.innerText = productName;
-
-    const productPrice = document.createElement('p');
-    productPrice.innerText = `$${price}`;
-
-    productCard.appendChild(productImage);
- 
